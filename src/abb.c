@@ -2,39 +2,19 @@
 #include "abb_estructura_privada.h"
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 abb_t *abb_crear(abb_comparador comparador)
 {
-	return NULL;
-}
-
-abb_t *abb_insertar(abb_t *arbol, void *elemento)
-{
+	if (!comparador)
+		return NULL;
+	abb_t *arbol = calloc(1, sizeof(abb_t));
+	if (!arbol) {
+		free(arbol);
+		return NULL;
+	}
+	arbol->comparador = comparador;
 	return arbol;
-}
-
-void *abb_quitar(abb_t *arbol, void *elemento)
-{
-	return elemento;
-}
-
-void *abb_buscar(abb_t *arbol, void *elemento)
-{
-	return elemento;
-}
-
-bool abb_vacio(abb_t *arbol)
-{
-	return true;
-}
-
-size_t abb_tamanio(abb_t *arbol)
-{
-	return 0;
-}
-
-void abb_destruir(abb_t *arbol)
-{
 }
 
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
