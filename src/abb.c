@@ -17,6 +17,46 @@ abb_t *abb_crear(abb_comparador comparador)
 	return arbol;
 }
 
+abb_t *abb_insertar(abb_t *arbol, void *elemento)
+{
+	if (!arbol) {
+		return NULL;
+	}
+
+	nodo_abb_t *nuevo_nodo = calloc(1, sizeof(nodo_abb_t));
+	if (!nuevo_nodo) {
+		free(nuevo_nodo);
+		return NULL;
+	}
+	nuevo_nodo->elemento = elemento;
+
+	if (!arbol->nodo_raiz) {
+		arbol->nodo_raiz = nuevo_nodo;
+		arbol->tamanio++;
+		return arbol;
+	}
+
+	nodo_abb_t *actual = arbol->nodo_raiz;
+	while (actual) {
+		if (arbol->comparador(actual->elemento, elemento) <= 0) {
+			if (!actual->izquierda) {
+				actual->izquierda = nuevo_nodo;
+				arbol->tamanio++;
+				actual = NULL;
+			} else
+				actual = actual->izquierda;
+		} else {
+			if (!actual->derecha) {
+				actual->derecha = nuevo_nodo;
+				arbol->tamanio++;
+				actual = NULL;
+			} else
+				actual = actual->derecha;
+		}
+	}
+	return arbol;
+}
+
 bool abb_vacio(abb_t *arbol)
 {
 	if (!arbol || !arbol->tamanio)
