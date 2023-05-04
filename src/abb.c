@@ -17,6 +17,25 @@ abb_t *abb_crear(abb_comparador comparador)
 	return arbol;
 }
 
+bool abb_vacio(abb_t *arbol)
+{
+	if (!arbol || !arbol->tamanio)
+		return true;
+	return false;
+}
+
+size_t abb_tamanio(abb_t *arbol)
+{
+	if (!arbol || !arbol->tamanio)
+		return 0;
+	return arbol->tamanio;
+}
+
+void abb_destruir(abb_t *arbol)
+{
+	free(arbol);
+}
+
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
 }
