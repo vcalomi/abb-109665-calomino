@@ -165,26 +165,29 @@ void liberar_nodos(nodo_abb_t *raiz)
 
 void abb_destruir(abb_t *arbol)
 {
+	if (!arbol)
+		return;
 	liberar_nodos(arbol->nodo_raiz);
 	free(arbol);
 }
 
-void liberar_todo(nodo_abb_t *raiz, void (*destructor)(void *))
+void liberar_elemento(nodo_abb_t *raiz, void (*destructor)(void *))
 {
 	if (raiz) {
+		liberar_elemento(raiz->izquierda, destructor);
+		liberar_elemento(raiz->derecha, destructor);
 		destructor(raiz->elemento);
-		liberar_todo(raiz->izquierda, destructor);
-		liberar_todo(raiz->derecha, destructor);
-		free(raiz);
 	}
 }
 
 void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
+	if (!arbol)
+		return;
 	if (!destructor) {
-		liberar_todo(arbol->nodo_raiz, destructor);
+		liberar_elemento(arbol->nodo_raiz, destructor);
 	}
-	free(arbol);
+	abb_destruir(arbol);
 }
 
 bool abb_cada_elemento_inorden(nodo_abb_t *raiz,
