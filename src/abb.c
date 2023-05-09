@@ -373,7 +373,7 @@ bool array_postorden(nodo_abb_t *raiz, void **array, size_t *cantidad,
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
 {
-	if (arbol == NULL || tamanio_array == 0) {
+	if (arbol == NULL || tamanio_array == 0 || array == NULL) {
 		return 0;
 	}
 
