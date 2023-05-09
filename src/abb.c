@@ -281,11 +281,110 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 		abb_cada_elemento_postorden(arbol->nodo_raiz, funcion, aux,
 					    &contador);
 	}
-	return 0;
+	return contador;
+}
+
+bool array_inorden(nodo_abb_t *raiz, void **array, size_t *cantidad,
+		   size_t tamanio_array)
+{
+	if (!raiz)
+		return true;
+
+	bool continuar = true;
+	continuar = array_inorden(raiz->izquierda, array, cantidad,
+				  tamanio_array) &&
+		    continuar;
+
+	if (*cantidad < tamanio_array && continuar) {
+		array[*cantidad] = raiz->elemento;
+		(*cantidad)++;
+	} else {
+		continuar = false;
+	}
+
+	continuar =
+		array_inorden(raiz->derecha, array, cantidad, tamanio_array) &&
+		continuar;
+
+	return continuar;
+}
+
+bool array_preorden(nodo_abb_t *raiz, void **array, size_t *cantidad,
+		    size_t tamanio_array)
+{
+	if (!raiz)
+		return true;
+
+	bool continuar = true;
+	if (*cantidad < tamanio_array && continuar) {
+		array[*cantidad] = raiz->elemento;
+		(*cantidad)++;
+	} else {
+		continuar = false;
+	}
+
+	continuar = array_preorden(raiz->izquierda, array, cantidad,
+				   tamanio_array) &&
+		    continuar;
+
+	continuar =
+		array_preorden(raiz->derecha, array, cantidad, tamanio_array) &&
+		continuar;
+
+	return continuar;
+}
+
+bool array_postorden(nodo_abb_t *raiz, void **array, size_t *cantidad,
+		     size_t tamanio_array)
+{
+	if (!raiz)
+		return true;
+
+	bool continuar = true;
+	continuar = array_postorden(raiz->izquierda, array, cantidad,
+				    tamanio_array) &&
+		    continuar;
+
+	continuar = array_postorden(raiz->derecha, array, cantidad,
+				    tamanio_array) &&
+		    continuar;
+
+	if (*cantidad < tamanio_array && continuar) {
+		array[*cantidad] = raiz->elemento;
+		(*cantidad)++;
+	} else {
+		continuar = false;
+	}
+	return continuar;
 }
 
 size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 		    size_t tamanio_array)
 {
-	return 0;
+	if (arbol == NULL || tamanio_array == 0) {
+		return 0;
+	}
+
+	size_t cantidad_elementos = 0;
+	switch (recorrido) {
+	case INORDEN:
+		array_inorden(arbol->nodo_raiz, array, &cantidad_elementos,
+			      tamanio_array);
+		printf("Cantidad de elementos: %ld\n", cantidad_elementos);
+		return cantidad_elementos;
+	case PREORDEN:
+		array_preorden(arbol->nodo_raiz, array, &cantidad_elementos,
+			       tamanio_array);
+		printf("Cantidad de elementos: %ld\n", cantidad_elementos);
+		return cantidad_elementos;
+	case POSTORDEN:
+		array_postorden(arbol->nodo_raiz, array, &cantidad_elementos,
+				tamanio_array);
+		printf("Cantidad de elementos: %ld\n", cantidad_elementos);
+		return cantidad_elementos;
+	default:
+		return 0;
+	}
+	return cantidad_elementos;
+	//quiza hay que liberar el array al final
 }
