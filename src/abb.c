@@ -138,6 +138,7 @@ void *abb_buscar_recursivo(nodo_abb_t *raiz, void *elemento,
 		return raiz->elemento;
 	}
 }
+
 void *abb_buscar(abb_t *arbol, void *elemento)
 {
 	if (!arbol)
@@ -190,7 +191,7 @@ void abb_destruir_todo(abb_t *arbol, void (*destructor)(void *))
 {
 	if (!arbol)
 		return;
-	if (!destructor) {
+	if (destructor) {
 		liberar_elemento(arbol->nodo_raiz, destructor);
 	}
 	abb_destruir(arbol);
@@ -276,16 +277,21 @@ size_t abb_con_cada_elemento(abb_t *arbol, abb_recorrido recorrido,
 
 	size_t contador = 0;
 
-	if (recorrido == INORDEN) {
+	switch (recorrido) {
+	case INORDEN:
 		abb_cada_elemento_inorden(arbol->nodo_raiz, funcion, aux,
 					  &contador);
-	} else if (recorrido == PREORDEN) {
+		break;
+	case PREORDEN:
 		abb_cada_elemento_preorden(arbol->nodo_raiz, funcion, aux,
 					   &contador);
-	}
-	if (recorrido == POSTORDEN) {
+		break;
+	case POSTORDEN:
 		abb_cada_elemento_postorden(arbol->nodo_raiz, funcion, aux,
 					    &contador);
+		break;
+	default:
+		break;
 	}
 	return contador;
 }
@@ -376,21 +382,17 @@ size_t abb_recorrer(abb_t *arbol, abb_recorrido recorrido, void **array,
 	case INORDEN:
 		array_inorden(arbol->nodo_raiz, array, &cantidad_elementos,
 			      tamanio_array);
-		printf("Cantidad de elementos: %ld\n", cantidad_elementos);
 		return cantidad_elementos;
 	case PREORDEN:
 		array_preorden(arbol->nodo_raiz, array, &cantidad_elementos,
 			       tamanio_array);
-		printf("Cantidad de elementos: %ld\n", cantidad_elementos);
 		return cantidad_elementos;
 	case POSTORDEN:
 		array_postorden(arbol->nodo_raiz, array, &cantidad_elementos,
 				tamanio_array);
-		printf("Cantidad de elementos: %ld\n", cantidad_elementos);
 		return cantidad_elementos;
 	default:
 		return 0;
 	}
 	return cantidad_elementos;
-	//quiza hay que liberar el array al final
 }
