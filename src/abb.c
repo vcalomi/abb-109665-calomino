@@ -72,12 +72,14 @@ nodo_abb_t *extraer_elemento_mas_derecho(nodo_abb_t *raiz,
 }
 
 void *abb_quitar_recursivo(nodo_abb_t *raiz, void *elemento,
-			   int (*comparador)(void *, void *), void **extraido)
+			   int (*comparador)(void *, void *), void **extraido,
+			   bool *encontrado)
 {
 	if (!raiz)
 		return NULL;
 	int comparacion = comparador(elemento, raiz->elemento);
 	if (comparacion == 0) {
+		*encontrado = true;
 		nodo_abb_t *izq = raiz->izquierda;
 		nodo_abb_t *der = raiz->derecha;
 		*extraido = raiz->elemento;
@@ -94,11 +96,13 @@ void *abb_quitar_recursivo(nodo_abb_t *raiz, void *elemento,
 			return izq;
 		}
 	} else if (comparacion < 0) {
-		raiz->izquierda = abb_quitar_recursivo(
-			raiz->izquierda, elemento, comparador, extraido);
+		raiz->izquierda = abb_quitar_recursivo(raiz->izquierda,
+						       elemento, comparador,
+						       extraido, encontrado);
 	} else {
 		raiz->derecha = abb_quitar_recursivo(raiz->derecha, elemento,
-						     comparador, extraido);
+						     comparador, extraido,
+						     encontrado);
 	}
 	return raiz;
 }
@@ -109,9 +113,11 @@ void *abb_quitar(abb_t *arbol, void *elemento)
 		return NULL;
 
 	void *extraido = NULL;
+	bool encontre_elemento = false;
 	arbol->nodo_raiz = abb_quitar_recursivo(arbol->nodo_raiz, elemento,
-						arbol->comparador, &extraido);
-	if (extraido)
+						arbol->comparador, &extraido,
+						&encontre_elemento);
+	if (encontre_elemento)
 		arbol->tamanio--;
 	return extraido;
 }
