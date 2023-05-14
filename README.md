@@ -84,11 +84,11 @@ Luego la funcion de quitar, es similar a la de buscar pero con la dificultad ext
 En este ejemplo si quisiera eliminar la raiz, para encontrar su predecesor inorden debo ir una vez a la izquierda y luego hacia la derecha hasta el final. En estos fragmentos de codigo vemos esta idea:
 
 
-<img src="./img/quitar_elemento_derecho.PNG" width="70%" style="border: 1px solid white;">
+<img src="./img/quitar_elemento_derecho.PNG" width="70%">
 
 -Llamo a la parte izquierda una vez.
 
-<img src="./img/elemento_derecho.PNG" width="70%" style="border: 1px solid white;">
+<img src="./img/elemento_derecho.PNG" width="70%">
 
 -Voy recursivamente hasta la derecha hasta encontrar el NULL.
 
@@ -101,11 +101,11 @@ Se crearon funciones para cada recorrido especifico en el que se produce un llam
 
 Ejemplo recorrido inorden:
 
-<img src="./img/recorrido inorden.PNG" width="70%" style="border: 1px solid white;">
+<img src="./img/recorrido inorden.PNG" width="70%">
 
 Ejemplo recorrido con array postorden:
 
-<img src="./img/recorrido array postorden.PNG" width="70%" style="border: 1px solid white;">
+<img src="./img/recorrido array postorden.PNG" width="70%">
 
 
 ---
@@ -114,7 +114,7 @@ Ejemplo recorrido con array postorden:
 El unico caso distinto es el de la funcion de insertar, ya que se me hizo mas facil pensarlo como la insercion en una lista enlazada, pero considerando que esta estuviese "bifurcada".
 De igual manera, la implementacion recursiva hubiese sido similar a las otras funciones.
 
-<img src="./img/insertar iterativo.PNG" width="70%" style="border: 1px solid white;">
+<img src="./img/insertar iterativo.PNG" width="70%">
 
 En la imagen podemos ver la bifurcacion mencionada. Si el comparador es mayor o igual a cero considero la parte izquierda, en otro caso considero la parte derecha.
 
