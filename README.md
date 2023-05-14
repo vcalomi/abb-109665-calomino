@@ -48,8 +48,6 @@ Los arboles binarios son aquellos en los cuales cada nodo posee dos hijos como m
 
 <img src="./img/arbol binario.svg" width="70%">
 
-Las operaciones en este tipo de arbol son: crear, destruir, insertar, borrar, buscar, ver si esta vacio y recorrer.
-
 Por ultimo, los arboles binarios de busqueda se diferencian de los arboles binarios en que poseen un orden. Cada nodo posee una clave o valor que se utiliza para comparar mediante una funcion con los demas valores y ubicarlos en base a la convencion establecida.
 
 <img src="./img/arbol binario busqueda.svg" width="70%">
